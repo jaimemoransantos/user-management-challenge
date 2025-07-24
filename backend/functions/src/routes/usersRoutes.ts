@@ -8,8 +8,8 @@ router.get("/:id", (req: Request, res: Response) => {
 });
 
 //Get all users method
-router.get("/", (req: Request, res: Response) => {
-  res.send("Get all users method");
+router.get("/", async (req: Request, res: Response) => {
+  res.send(`Get all users method}`);
 });
 
 //Create user method
