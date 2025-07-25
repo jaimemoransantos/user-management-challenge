@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import type { User } from "../types/User";
 import ListItem from "./ui/ListItem";
+import EditUserModal from "./EditUserModal";
 
 const UsersList = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -48,11 +51,20 @@ const UsersList = () => {
         {users.map((user: User) => {
           return (
             <div key={user.id}>
-              <ListItem user={user} />
+              <ListItem
+                user={user}
+                setSelectedUser={setSelectedUser}
+                setIsEditModalOpen={setIsEditModalOpen}
+              />
             </div>
           );
         })}
       </div>
+      <EditUserModal
+        isOpen={isEditModalOpen}
+        setIsOpen={setIsEditModalOpen}
+        user={selectedUser}
+      />
     </>
   );
 };
