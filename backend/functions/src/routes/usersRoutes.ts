@@ -9,6 +9,10 @@ import {
 
 const router = Router();
 
+// Full CRUD operations for users.
+// My final approach reads users using the Firebase SDK
+// to showcase live updates from the Firebase Realtime Database.
+
 //Get user by id method
 router.get("/:id", getUser);
 
