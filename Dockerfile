@@ -53,4 +53,4 @@ RUN sh -c '\
 EXPOSE 5001 5002 9000 4000 8080 9099 9199
 
 # Default command to start the emulators
-CMD ["firebase", "emulators:start", "--only", "functions,database,hosting"]
+CMD ["firebase", "emulators:start", "--only", "functions,database,hosting", "--project", "user-management-challenge"]
