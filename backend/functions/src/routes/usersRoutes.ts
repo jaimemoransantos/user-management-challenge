@@ -1,4 +1,5 @@
 import { Request, Response, Router } from "express";
+import { createUser } from "../controllers/usersController";
 
 const router = Router();
 
@@ -13,9 +14,7 @@ router.get("/", async (req: Request, res: Response) => {
 });
 
 //Create user method
-router.post("/", (req: Request, res: Response) => {
-  res.send("Create method");
-});
+router.post("/", createUser);
 
 //Update user method
 router.put("/:id", (req: Request, res: Response) => {
