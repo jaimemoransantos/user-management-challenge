@@ -1,34 +1,33 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import type { User } from "../types/User";
 import ListItem from "./ui/ListItem";
 import EditUserModal from "./EditUserModal";
+import useUsersFromRealtimeDB from "../hooks/useRealtimeDB";
 
 const UsersList = () => {
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const { users, loading, error } = useUsersFromRealtimeDB("users");
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:5001/user-management-challenge/us-central1/api/users"
-        );
-        console.log("response", response);
-        const data = await response.json();
-        setUsers(data.users);
-        setLoading(false);
-      } catch (error) {
-        setError(
-          error instanceof Error ? error.message : "Unknown error occurred"
-        );
-        setLoading(false);
-      }
-    };
-    fetchUsers();
-  }, []);
+  // useEffect(() => {
+  //   const fetchUsers = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         "http://localhost:5001/user-management-challenge/us-central1/api/users"
+  //       );
+  //       console.log("response", response);
+  //       const data = await response.json();
+  //       setUsers(data.users);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       setError(
+  //         error instanceof Error ? error.message : "Unknown error occurred"
+  //       );
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchUsers();
+  // }, []);
 
   return (
     <>

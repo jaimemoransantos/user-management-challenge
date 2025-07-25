@@ -5,57 +5,12 @@ import "leaflet/dist/leaflet.css";
 import type { LatLngBoundsExpression } from "leaflet";
 import { formatUtcOffset } from "../utils/formatUtcOffset";
 import UserAddModal from "./AddUserModal";
+import useUsersFromRealtimeDB from "../hooks/useRealtimeDB";
 
 // const UsersMap = ({ users }: { users: User[] }) => {
 const UsersMap = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [users, setUsers] = useState<User[]>([
-    {
-      id: "1",
-      name: "Alice Johnson",
-      zipCode: "10001",
-      latitude: 40.7128,
-      longitude: -74.006,
-      timezone: -14400,
-    },
-    {
-      id: "2",
-      name: "Bob Smith",
-      zipCode: "94105",
-      latitude: 37.7749,
-      longitude: -122.4194,
-      timezone: -28800,
-    },
-    {
-      id: "3",
-      name: "Carlos Martinez",
-      zipCode: "60601",
-      latitude: 41.8781,
-      longitude: -87.6298,
-      timezone: -21600,
-    },
-  ]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:5001/user-management-challenge/us-central1/api/users"
-        );
-        const data = await response.json();
-        setUsers(data.users);
-        setLoading(false);
-      } catch (error) {
-        setError(
-          error instanceof Error ? error.message : "Unknown error occurred"
-        );
-        setLoading(false);
-      }
-    };
-    fetchUsers();
-  }, []);
+  const { users, loading, error } = useUsersFromRealtimeDB("users");
 
   const Bounds = () => {
     const map = useMap();
@@ -74,7 +29,7 @@ const UsersMap = () => {
       <div className="h-full w-full relative">
         <button
           onClick={() => setIsOpen(true)}
-          className="absolute top-6 right-6 p-6 font-bold rounded-full bg-blue-500 hover:bg-blue-600 text-white z-[1000]"
+          className="absolute top-6 right-6 p-3 font-bold rounded-full bg-blue-500 hover:bg-blue-600 text-white z-[1000]"
         >
           + Add User
         </button>
