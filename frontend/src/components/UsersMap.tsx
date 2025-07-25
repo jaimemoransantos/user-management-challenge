@@ -3,11 +3,23 @@ import type { User } from "../types/User";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import type { LatLngBoundsExpression } from "leaflet";
+import L from "leaflet";
 import { formatUtcOffset } from "../utils/formatUtcOffset";
 import UserAddModal from "./AddUserModal";
 import useUsersFromRealtimeDB from "../hooks/useRealtimeDB";
 
-// const UsersMap = ({ users }: { users: User[] }) => {
+// According to documentation this step is required to fix the broken icon issue
+
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
+  iconUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
+  shadowUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+});
+
 const UsersMap = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { users, loading, error } = useUsersFromRealtimeDB("users");
