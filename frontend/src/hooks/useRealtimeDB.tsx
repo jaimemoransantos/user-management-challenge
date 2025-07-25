@@ -14,7 +14,6 @@ const useUsersFromRealtimeDB = (entryPoint: string) => {
     onValue(
       usersRef,
       async (snapshot) => {
-        console.log("Snapshot", snapshot);
         const data = snapshot.val();
         if (!data) {
           setUsers([]);
