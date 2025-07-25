@@ -9,26 +9,6 @@ const UsersList = () => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const { users, loading, error } = useUsersFromRealtimeDB("users");
 
-  // useEffect(() => {
-  //   const fetchUsers = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         "http://localhost:5001/user-management-challenge/us-central1/api/users"
-  //       );
-  //       console.log("response", response);
-  //       const data = await response.json();
-  //       setUsers(data.users);
-  //       setLoading(false);
-  //     } catch (error) {
-  //       setError(
-  //         error instanceof Error ? error.message : "Unknown error occurred"
-  //       );
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchUsers();
-  // }, []);
-
   return (
     <>
       <div className="bg-white ">
@@ -37,27 +17,39 @@ const UsersList = () => {
         </h1>
         <ul className="list-disc list-inside text-sm text-gray-600 space-y-1">
           <li>
-            Click on a user <strong>on the map</strong> to see their details
+            Click on the <strong>+ Add User</strong> button to add a new user
+          </li>
+          <li>
+            Click on a <strong>pinpoint on the map</strong> to see user
+            information
           </li>
           <li>
             Click on a user <strong>on the list</strong> to edit their data
           </li>
         </ul>
       </div>
-      {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
-      <div className="flex flex-col gap-2 overflow-y-auto">
-        {users.map((user: User) => {
-          return (
-            <div key={user.id}>
-              <ListItem
-                user={user}
-                setSelectedUser={setSelectedUser}
-                setIsEditModalOpen={setIsEditModalOpen}
-              />
-            </div>
-          );
-        })}
+      <div className="flex flex-col gap-2">
+        <h2 className="text-xl font-bold text-gray-800 mb-2">List of Users</h2>
+        <div className="flex flex-col gap-2 overflow-y-auto">
+          {loading ? (
+            <p className="text-gray-500 text-center">Loading...</p>
+          ) : users.length > 0 ? (
+            users.map((user: User) => {
+              return (
+                <div key={user.id}>
+                  <ListItem
+                    user={user}
+                    setSelectedUser={setSelectedUser}
+                    setIsEditModalOpen={setIsEditModalOpen}
+                  />
+                </div>
+              );
+            })
+          ) : (
+            <p className="text-gray-500 text-center">No users found!</p>
+          )}
+        </div>
       </div>
       <EditUserModal
         isOpen={isEditModalOpen}
