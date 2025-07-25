@@ -1,13 +1,13 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, connectDatabaseEmulator } from "firebase/database";
 
-//mock data, using Firebase Realtime Database URL for local development
+// Both local and Docker now use the same namespace
+// No manual configuration needed - works for both environments
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
+  apiKey: "fake-api-key",
   authDomain: "localhost",
-  //   databaseURL:
-  //     "http://localhost:9000/?ns=user-management-challenge-default-rtdb",
+  databaseURL: "http://localhost:9000/?ns=user-management-challenge",
   projectId: "user-management-challenge",
 };
 
