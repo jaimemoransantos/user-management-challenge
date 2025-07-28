@@ -1,3 +1,4 @@
+
 # 🧑‍💻 User Management Challenge
 
 A full-stack user management system with live updates using Firebase Realtime Database, Vite + React.js, and Node.js — all running in Docker.
@@ -13,14 +14,17 @@ This project is fully containerized using **Docker**, including the Firebase Emu
 - Docker installed
 - Port `5002` (hosting), `5001` (functions), `9000` (database), and `4000` (emulator UI) must be available
 
+---
+
 ### 📦 Steps
 
 ```bash
 # Clone the repository
 git clone https://github.com/jaimemoransantos/user-management-challenge.git
 cd user-management-challenge
+```
 
-## 📄 .env Setup (Required)
+### 📄 .env Setup (Required)
 
 Inside the `backend/functions` folder, create a file named `.env` and add your OpenWeatherMap API key:
 
@@ -47,8 +51,8 @@ cp backend/functions/.env.example backend/functions/.env
 Copy-Item backend/functions/.env.example backend/functions/.env
 ```
 
----
-
+```bash
+# Build and start the project
 docker compose up --build
 ```
 
@@ -121,46 +125,15 @@ Instead of fetching data via API GET requests, I implemented a client-side Fireb
 
 ```
 ├── backend
-│ ├── functions # Firebase Cloud Functions (Express API)
-│ │ └── .env # Add your OpenWeatherMap API key here
+│   ├── functions # Firebase Cloud Functions (Express API)
+│   │   └── .env # Add your OpenWeatherMap API key here
 ├── frontend
-│ └── src # React App
+│   └── src # React App
 ├── database.rules.json
 ├── firebase.json
 ├── Dockerfile
 ├── docker-compose.yml
 ```
-
----
-
-
-## 📄 .env Setup (Required)
-
-Inside the `backend/functions` folder, create a file named `.env` and add your OpenWeatherMap API key:
-
-```env
-# backend/functions/.env
-OPEN_WEATHER_MAP_API_KEY=your-api-key
-```
-
-🔐 You may replace the sample key with your own from [openweathermap.org](https://openweathermap.org/api)  
-✅ This file is required to fetch location and timezone data by ZIP code using the OpenWeatherMap API.
-
-You can either:
-
-- Create the `.env` file manually using the structure above, **or**
-- Copy the provided `.env.example` file and edit it:
-
-#### 🖥 On macOS / Git Bash / WSL:
-```bash
-cp backend/functions/.env.example backend/functions/.env
-```
-
-#### 🪟 On Windows PowerShell:
-```powershell
-Copy-Item backend/functions/.env.example backend/functions/.env
-```
-
 
 ---
 
