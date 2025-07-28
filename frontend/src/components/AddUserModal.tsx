@@ -36,8 +36,6 @@ const UserAddModal = ({
       if (!response.ok) {
         throw new Error("Failed to add user");
       }
-      const data = await response.json();
-      console.log(data);
       setIsOpen(false);
       setName("");
       setZipCode("");
@@ -72,12 +70,12 @@ const UserAddModal = ({
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label htmlFor="zipCode">Zip Code</label>
+              <label htmlFor="zipCode">ZIP Code</label>
               <input
                 type="text"
                 id="zipCode"
                 value={zipCode}
-                placeholder="Enter zip code (99999)"
+                placeholder="Enter ZIP code (99999)"
                 maxLength={5}
                 required
                 pattern="^\d{5}$"

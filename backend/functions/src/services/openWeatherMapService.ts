@@ -16,7 +16,7 @@ export async function getZipLocationData(zipCode: string) {
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response?.status === 404) {
-      throw new BadRequestError("The provided ZIP returned no results");
+      throw new BadRequestError("The provided ZIP code returned no results");
     }
     throw new Error("Failed to fetch ZIP code data");
   }
