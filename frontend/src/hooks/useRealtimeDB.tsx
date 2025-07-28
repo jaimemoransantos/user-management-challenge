@@ -3,7 +3,7 @@ import { database } from "../lib/firebase";
 import { ref, onValue, off } from "firebase/database";
 import type { User } from "../types/User";
 
-const useUsersFromRealtimeDB = (entryPoint: string) => {
+const useRealtimeDB = (entryPoint: string) => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -41,4 +41,4 @@ const useUsersFromRealtimeDB = (entryPoint: string) => {
   return { users, loading, error };
 };
 
-export default useUsersFromRealtimeDB;
+export default useRealtimeDB;
