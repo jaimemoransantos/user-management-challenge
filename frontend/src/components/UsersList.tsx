@@ -29,7 +29,12 @@ const UsersList = () => {
         </ul>
       </section>
       <section className="flex flex-col gap-2 h-full flex-grow min-h-0">
-        <h2 className="text-xl font-bold text-gray-800 mb-2">List of Users</h2>
+        <h2 className="text-xl font-bold text-gray-800 mb-2">
+          List of Users:{" "}
+          <span className="p-1 bg-gray-100 rounded-md text-gray-500">
+            {users.length}
+          </span>
+        </h2>
         <ul className="flex flex-col gap-2 overflow-y-auto h-full pb-4">
           {error && <p>{error}</p>}
           {loading ? (
