@@ -37,17 +37,19 @@ const EditUserModal = ({
           },
         }
       );
+
       if (!response.ok) {
-        throw new Error("Failed to update user");
+        const data = await response.json();
+        setError(data?.error || "Failed to update user");
+        return;
       }
-      const data = await response.json();
-      console.log(data);
+
       setIsOpen(false);
       setName("");
       setZipCode("");
       setError("");
     } catch (error) {
-      setError("Failed to update user");
+      setError("An unexpected error occurred");
     } finally {
       setUpdatingUser(false);
     }
@@ -76,12 +78,19 @@ const EditUserModal = ({
     }
   };
 
+  const handleClose = () => {
+    setIsOpen(false);
+    setName("");
+    setZipCode("");
+    setError("");
+  };
+
   useEffect(() => {
-    if (user) {
+    if (user && isOpen) {
       setName(user.name);
       setZipCode(user.zipCode);
     }
-  }, [user]);
+  }, [user, isOpen]);
 
   return (
     isOpen && (
@@ -89,7 +98,7 @@ const EditUserModal = ({
         <div className="flex flex-col gap-3">
           <div className="flex justify-between">
             <h2 className="text-2xl font-bold">Edit User</h2>
-            <button onClick={() => setIsOpen(false)}>Close X</button>
+            <button onClick={handleClose}>Close X</button>
           </div>
           <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-2">
@@ -105,12 +114,12 @@ const EditUserModal = ({
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label htmlFor="zipCode">Zip Code</label>
+              <label htmlFor="zipCode">ZIP Code</label>
               <input
                 type="text"
                 id="zipCode"
                 value={zipCode}
-                placeholder="Enter zip code (99999)"
+                placeholder="Enter ZIP code (99999)"
                 maxLength={5}
                 required
                 pattern="^\d{5}$"
