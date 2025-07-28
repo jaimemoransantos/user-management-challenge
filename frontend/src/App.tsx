@@ -1,8 +1,11 @@
 import "./App.css";
 import UsersList from "./components/UsersList";
 import UsersMap from "./components/UsersMap";
+import useRealtimeDB from "./hooks/useRealtimeDB";
 
 function App() {
+  useRealtimeDB("users");
+
   return (
     // This page distribution is set for desktop as project will run on desktop
     // Will need to adjust for mobile

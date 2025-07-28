@@ -2,12 +2,15 @@ import { useState } from "react";
 import type { User } from "../types/User";
 import ListItem from "./ui/ListItem";
 import EditUserModal from "./EditUserModal";
-import useRealtimeDB from "../hooks/useRealtimeDB";
+import { useSelector } from "react-redux";
+import type { RootState } from "../store";
 
 const UsersList = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const { users, loading, error } = useRealtimeDB("users");
+  const { users, loading, error } = useSelector(
+    (state: RootState) => state.users
+  );
 
   return (
     <>

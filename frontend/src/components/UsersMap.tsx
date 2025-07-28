@@ -6,8 +6,8 @@ import type { LatLngBoundsExpression } from "leaflet";
 import L from "leaflet";
 import { formatUtcOffset } from "../utils/formatUtcOffset";
 import UserAddModal from "./AddUserModal";
-import useRealtimeDB from "../hooks/useRealtimeDB";
-
+import { useSelector } from "react-redux";
+import type { RootState } from "../store";
 // According to documentation this step is required to fix the broken icon issue
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -22,7 +22,9 @@ L.Icon.Default.mergeOptions({
 
 const UsersMap = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { users, loading, error } = useRealtimeDB("users");
+  const { users, loading, error } = useSelector(
+    (state: RootState) => state.users
+  );
 
   const Bounds = () => {
     const map = useMap();

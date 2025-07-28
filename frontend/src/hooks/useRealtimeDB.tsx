@@ -2,11 +2,15 @@ import { useEffect, useState } from "react";
 import { database } from "../lib/firebase";
 import { ref, onValue, off } from "firebase/database";
 import type { User } from "../types/User";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../store";
+import { setUsers } from "../store/userSlice";
 
 const useRealtimeDB = (entryPoint: string) => {
-  const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const dispatch = useDispatch();
+  const users = useSelector((state: RootState) => state.users);
 
   useEffect(() => {
     const usersRef = ref(database, entryPoint);
@@ -16,7 +20,7 @@ const useRealtimeDB = (entryPoint: string) => {
       async (snapshot) => {
         const data = snapshot.val();
         if (!data) {
-          setUsers([]);
+          dispatch(setUsers([]));
           setLoading(false);
           return;
         }
@@ -26,7 +30,7 @@ const useRealtimeDB = (entryPoint: string) => {
             ...value,
           })
         );
-        setUsers(parsedUsers as User[]);
+        dispatch(setUsers(parsedUsers as User[]));
         setLoading(false);
       },
       (error) => {
@@ -36,7 +40,7 @@ const useRealtimeDB = (entryPoint: string) => {
     );
 
     return () => off(usersRef);
-  }, [entryPoint]);
+  }, [entryPoint, dispatch]);
 
   return { users, loading, error };
 };
