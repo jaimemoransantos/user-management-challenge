@@ -6,7 +6,7 @@ import type { LatLngBoundsExpression } from "leaflet";
 import L from "leaflet";
 import { formatUtcOffset } from "../utils/formatUtcOffset";
 import UserAddModal from "./AddUserModal";
-import useUsersFromRealtimeDB from "../hooks/useRealtimeDB";
+import useRealtimeDB from "../hooks/useRealtimeDB";
 
 // According to documentation this step is required to fix the broken icon issue
 
@@ -22,7 +22,7 @@ L.Icon.Default.mergeOptions({
 
 const UsersMap = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { users, loading, error } = useUsersFromRealtimeDB("users");
+  const { users, loading, error } = useRealtimeDB("users");
 
   const Bounds = () => {
     const map = useMap();
@@ -38,7 +38,7 @@ const UsersMap = () => {
     <>
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
-      <div className="h-full w-full relative">
+      <section className="h-full w-full relative">
         <button
           onClick={() => setIsOpen(true)}
           className="absolute top-6 right-6 p-3 font-bold rounded-full bg-blue-500 hover:bg-blue-600 text-white z-[1000]"
@@ -63,7 +63,7 @@ const UsersMap = () => {
                 <Popup>
                   <div className="flex flex-col gap-2">
                     <div className="font-bold m-0 p-0"> {user.name}</div>
-                    <div className="m-0 p-0">Zip Code: {user.zipCode}</div>
+                    <div className="m-0 p-0">ZIP Code: {user.zipCode}</div>
                     <div className="m-0 p-0">
                       Timezone: {formatUtcOffset(user.timezone)}
                     </div>
@@ -76,7 +76,7 @@ const UsersMap = () => {
             );
           })}
         </MapContainer>
-      </div>
+      </section>
       <UserAddModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );
