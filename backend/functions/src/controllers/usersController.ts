@@ -28,8 +28,8 @@ export const createUser = async (req: Request, res: Response) => {
 
   if (zipCode.length !== 5) {
     return res.status(400).json({
-      message: "Invalid zip code",
-      error: "Zip code must be 5 digits",
+      message: "Invalid ZIP code",
+      error: "ZIP code must be 5 digits",
     });
   }
 
@@ -133,8 +133,8 @@ export const updateUser = async (req: Request, res: Response) => {
 
   if (zipCode.length !== 5) {
     return res.status(400).json({
-      message: "Invalid zip code",
-      error: "Zip code must be 5 digits",
+      message: "Invalid ZIP code",
+      error: "ZIP code must be 5 digits",
     });
   }
 
