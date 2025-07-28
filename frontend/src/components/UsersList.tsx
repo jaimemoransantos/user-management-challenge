@@ -2,17 +2,17 @@ import { useState } from "react";
 import type { User } from "../types/User";
 import ListItem from "./ui/ListItem";
 import EditUserModal from "./EditUserModal";
-import useUsersFromRealtimeDB from "../hooks/useRealtimeDB";
+import useRealtimeDB from "../hooks/useRealtimeDB";
 
 const UsersList = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const { users, loading, error } = useUsersFromRealtimeDB("users");
+  const { users, loading, error } = useRealtimeDB("users");
 
   return (
     <>
-      <div className="bg-white ">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">
+      <section className="bg-white ">
+        <h1 className="text-2xl font-bold text-gray-800 mb-2">
           User Management System
         </h1>
         <ul className="list-disc list-inside text-sm text-gray-600 space-y-1">
@@ -27,30 +27,30 @@ const UsersList = () => {
             Click on a user <strong>on the list</strong> to edit their data
           </li>
         </ul>
-      </div>
-      {error && <p>{error}</p>}
-      <div className="flex flex-col gap-2">
+      </section>
+      <section className="flex flex-col gap-2 h-full flex-grow min-h-0">
         <h2 className="text-xl font-bold text-gray-800 mb-2">List of Users</h2>
-        <div className="flex flex-col gap-2 overflow-y-auto">
+        <ul className="flex flex-col gap-2 overflow-y-auto h-full pb-4">
+          {error && <p>{error}</p>}
           {loading ? (
             <p className="text-gray-500 text-center">Loading...</p>
           ) : users.length > 0 ? (
             users.map((user: User) => {
               return (
-                <div key={user.id}>
+                <li key={user.id}>
                   <ListItem
                     user={user}
                     setSelectedUser={setSelectedUser}
                     setIsEditModalOpen={setIsEditModalOpen}
                   />
-                </div>
+                </li>
               );
             })
           ) : (
             <p className="text-gray-500 text-center">No users found!</p>
           )}
-        </div>
-      </div>
+        </ul>
+      </section>
       <EditUserModal
         isOpen={isEditModalOpen}
         setIsOpen={setIsEditModalOpen}
