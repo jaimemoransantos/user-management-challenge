@@ -1,8 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, connectDatabaseEmulator } from "firebase/database";
 
-// Both local and Docker now use the same namespace
-// No manual configuration needed - works for both environments
+// Firebase config has fake data for local development as no project
+// has to be created to use the realtime database emulator
 
 const firebaseConfig = {
   apiKey: "fake-api-key",
