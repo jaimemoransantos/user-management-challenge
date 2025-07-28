@@ -96,16 +96,23 @@ const EditUserModal = ({
     isOpen && (
       <Modal>
         <div className="flex flex-col gap-3">
-          <div className="flex justify-between">
+          <header className="flex justify-between items-center">
             <h2 className="text-2xl font-bold">Edit User</h2>
-            <button onClick={handleClose}>Close X</button>
-          </div>
+            <button
+              onClick={handleClose}
+              type="button"
+              className="text-gray-500 hover:text-gray-700"
+            >
+              Close X
+            </button>
+          </header>
           <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-2">
               <label htmlFor="name">Name</label>
               <input
                 type="text"
                 id="name"
+                name="name"
                 value={name}
                 placeholder="Enter name"
                 required
@@ -118,6 +125,7 @@ const EditUserModal = ({
               <input
                 type="text"
                 id="zipCode"
+                name="zipCode"
                 value={zipCode}
                 placeholder="Enter ZIP code (99999)"
                 maxLength={5}
@@ -131,17 +139,23 @@ const EditUserModal = ({
             <div className="flex gap-2 justify-between">
               <button
                 type="button"
-                className="mt-4 bg-red-500 hover:bg-red-600 text-white p-2 rounded-md"
+                className="mt-4 bg-red-500 hover:bg-red-600 text-white p-2 rounded-md disabled:opacity-50 flex items-center justify-center gap-2"
                 disabled={deletingUser}
                 onClick={deleteUser}
               >
+                {deletingUser && (
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                )}
                 {deletingUser ? "Deleting..." : "Delete User"}
               </button>
               <button
                 type="submit"
-                className="mt-4 bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md"
+                className="mt-4 bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md disabled:opacity-50 flex items-center justify-center gap-2"
                 disabled={updatingUser}
               >
+                {updatingUser && (
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                )}
                 {updatingUser ? "Updating..." : "Update User"}
               </button>
             </div>

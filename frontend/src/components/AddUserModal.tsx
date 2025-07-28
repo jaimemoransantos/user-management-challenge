@@ -68,10 +68,9 @@ const UserAddModal = ({
             <button
               onClick={handleClose}
               type="button"
-              aria-label="Close modal"
               className="text-gray-500 hover:text-gray-700"
             >
-              ×
+              Close ×
             </button>
           </header>
           <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
@@ -106,9 +105,12 @@ const UserAddModal = ({
             {error && <p className="text-red-500">{error}</p>}
             <button
               type="submit"
-              className="mt-4 bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md disabled:opacity-50"
+              className="mt-4 bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md disabled:opacity-50 flex items-center justify-center gap-2"
               disabled={creatingUser}
             >
+              {creatingUser && (
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              )}
               {creatingUser ? "Adding..." : "Add User"}
             </button>
           </form>
